@@ -1,6 +1,6 @@
 # AES-128 from FIPS 197
 
-This is an implementation of AES-128 encryption and decryption in C++, written
+This is an implementation of AES-128 encryption and decryption in C, written
 directly from [NIST FIPS 197-upd1](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197-upd1.pdf)
 without reference to existing cryptographic libraries.
 
