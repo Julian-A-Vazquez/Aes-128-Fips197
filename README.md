@@ -23,6 +23,6 @@ because the point of the exercise is the field arithmetic, not the table.
 ## Build
 
 ```
-g++ -std=c++17 -O2 -o aes src/*.cpp
+gcc -std=c17 -O2 -o aes src/*.c
 ./aes --test
 ```
