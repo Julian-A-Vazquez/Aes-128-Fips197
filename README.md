@@ -53,10 +53,14 @@ one inverse.
 
 ## Build
 
-Not yet buildable as a standalone program. `src/aes.c` compiles clean under
+`src/aes.c` compiles clean with warnings as errors:
 
 ```
 gcc -std=c17 -O1 -Wall -Wextra -Wpedantic -Werror -c src/aes.c
 ```
 
-once `src/aes.h` is present. A test harness and an entry point come next.
+`src/aes.h` declares the public interface: `xtime`, `gmul`, `build_sbox`, and the
+SubBytes accessors `sub_byte` / `inv_sub_byte`. The lookup tables and the helpers
+that build them are `static` and not reachable from outside the module.
+
+A test harness and an entry point come next.

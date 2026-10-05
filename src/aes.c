@@ -33,10 +33,10 @@ void build_inv(void){
         }
 }
 }
-uint8_t rotl8(uint8_t x, int n) {
+static uint8_t rotl8(uint8_t x, int n) {
     return (uint8_t)((x << n) | (x >> (8 - n)));
 }
-uint8_t affine_transform(uint8_t x){
+static uint8_t affine_transform(uint8_t x){
     return (uint8_t) (x ^ rotl8(x, 1) ^ rotl8(x, 2)
     ^ rotl8(x, 3) ^ rotl8(x, 4) ^ 0x63);
 }
@@ -51,3 +51,6 @@ void build_sbox(void){
     inv_sbox[sbox[i]] = i;
     }
 }
+uint8_t sub_byte(uint8_t b){ return sbox[b]; }
+uint8_t inv_sub_byte(uint8_t b){ return inv_sbox[b]; }
+
