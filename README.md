@@ -10,7 +10,7 @@ Most AES implementations hardcode the S-box as a 256-byte table. This one derive
 the multiplicative inverse in GF(2^8) followed by the affine transform, because the
 point of the exercise is the field arithmetic, not the table.
 
-The derived S-box matches FIPS 197 Figure 7.
+The derived S-box matches FIPS 197 Table 4 (Figure 7 in the original 2001 edition).
 
 ## Status
 
@@ -20,7 +20,7 @@ The derived S-box matches FIPS 197 Figure 7.
 - [ ] Key expansion
 - [ ] SubBytes / ShiftRows / MixColumns / AddRoundKey
 - [ ] Inverse cipher
-- [ ] Verification against FIPS 197 Appendix C test vectors
+- [ ] Verification against the AES-128 cipher example in FIPS 197 Appendix B
 - [ ] Constant-time verification of the full cipher (assembly check done for the S-box layer; dudect not yet run)
 
 ## How the S-box is derived
@@ -72,10 +72,10 @@ Square-and-multiply would cut it to around a dozen.
 
 ## Verified so far
 
-- `gmul(0x57, 0x83) == 0xc1` and `gmul(0x57, 0x13) == 0xfe` (FIPS 197 section 4.2)
+- `gmul(0x57, 0x13) == 0xfe` (FIPS 197 section 4.2, Eq. 4.7) and `gmul(0x57, 0x83) == 0xc1` (section 4.2 of the 2001 edition)
 - multiplicative identity and zero across all 256 values
 - `inv[0x53] == 0xca`
-- S-box row 0 matches Figure 7: `63 7c 77 7b f2 6b 6f c5 30 01 67 2b fe d7 ab 76`
+- S-box row 0 matches Table 4: `63 7c 77 7b f2 6b 6f c5 30 01 67 2b fe d7 ab 76`
 - `sbox[0x53] == 0xed`, `inv_sbox[0xed] == 0x53`, `sbox[0x00] == 0x63`
 - `inv_sbox[sbox[x]] == x` for all 256 values
 - the S-box is a bijection

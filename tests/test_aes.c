@@ -11,10 +11,10 @@ static int failures = 0;
 int main(void) {
     build_sbox();
 
-    /* FIPS 197 section 4.2 multiplication examples */
+    /* Multiplication examples: 57*13 = fe is FIPS 197 (2023) Eq. 4.7; 57*83 = c1 is from section 4.2 of the 2001 edition */
     CHECK(gmul(0x57, 0x83) == 0xc1, "gmul(57,83) = %02x, want c1", gmul(0x57, 0x83));
     CHECK(gmul(0x57, 0x13) == 0xfe, "gmul(57,13) = %02x, want fe", gmul(0x57, 0x13));
-    /* FIPS 197 section 4.2.1 xtime examples */
+    /* xtime chain from the same 57*13 example (FIPS 197 section 4.2) */
     CHECK(xtime(0x57) == 0xae, "xtime(57) = %02x, want ae", xtime(0x57));
     CHECK(xtime(0xae) == 0x47, "xtime(ae) = %02x, want 47", xtime(0xae));
     CHECK(xtime(0x47) == 0x8e, "xtime(47) = %02x, want 8e", xtime(0x47));
@@ -28,7 +28,7 @@ int main(void) {
             CHECK(gmul((uint8_t)a, (uint8_t)b) == gmul((uint8_t)b, (uint8_t)a), "gmul(%02x,%02x) not commutative", a, b);
     }
 
-    /* S-box row 0 from FIPS 197 Figure 7 */
+    /* S-box row 0 from FIPS 197 Table 4 (Figure 7 in the 2001 edition) */
     static const uint8_t row0[16] = {0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76};
     for (int i = 0; i < 16; i++)
         CHECK(sub_byte((uint8_t)i) == row0[i], "sbox[%02x] = %02x, want %02x", i, sub_byte((uint8_t)i), row0[i]);
